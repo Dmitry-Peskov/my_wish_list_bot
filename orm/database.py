@@ -28,7 +28,7 @@ async def add_user(telegram_id: int, fullname: str, nickname: str) -> None:
     async with SESSION() as session:
         async with session.begin():
             user = User(telegram_id=telegram_id, fullname=fullname, nickname=nickname)
-            session.add(user)
+            await session.add(user)
 
 
 async def add_desire(user_id: int, title: str, url: str) -> None:
@@ -43,4 +43,17 @@ async def add_desire(user_id: int, title: str, url: str) -> None:
     async with SESSION() as session:
         async with session.begin():
             desire = Desire(user_id=user_id, title=title, url=url)
-            session.add(desire)
+            await session.add(desire)
+
+
+async def this_user_exists(telegram_id: int) -> bool:
+    """
+    Проверить по telegram id существует ли пользователь в БД
+
+    :param telegram_id: id пользователя в telegram
+    :return: False если пользователя нет в БД, иначе True
+    """
+    async with SESSION() as session:
+        async with session.begin():
+            user = await session.get(User, {"telegram_id": telegram_id})
+            return False if user is None else True
