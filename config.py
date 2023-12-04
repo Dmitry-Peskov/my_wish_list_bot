@@ -28,3 +28,4 @@ class API_BOT:
 @dataclass
 class DB:
     DSN: str = create_dsn()
+
