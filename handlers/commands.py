@@ -9,6 +9,7 @@ from keyboards import inline_kb as ikb
 
 router = Router()
 
+
 @router.message(CommandStart())
 async def start_cmd(message: Message) -> None:
     this_user_exists = await db.this_user_exists(message.from_user.id)
@@ -24,7 +25,8 @@ async def start_cmd(message: Message) -> None:
 
 @router.message(Command("help"))
 async def help_cmd(message: Message) -> None:
-    pass
+    await message.answer(text=msg.help_msg(), reply_markup=ikb.delete_message(), parse_mode=ParseMode.HTML)
+    await message.delete()
 
 
 @router.message(Command("about"))

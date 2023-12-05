@@ -4,10 +4,12 @@ import sys
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
 from handlers import commands
+from handlers import service_callback
 from config import API_BOT
 
 dp = Dispatcher()
 dp.include_router(commands.router)
+dp.include_router(service_callback.router)
 
 async def main() -> None:
     bot = Bot(API_BOT.TOKEN, parse_mode=ParseMode.HTML)
