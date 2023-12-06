@@ -23,6 +23,7 @@ async def choice_desire_url(message: Message, state: FSMContext):
     await state.update_data(title=desire_title)
     await state.set_state(AddDesire.get_desire_url)
     await message.answer(text=msg.get_desire_url())
+    await message.delete()
 
 
 @router.message(AddDesire.get_desire_url)
@@ -39,6 +40,7 @@ async def choice_desire_url(message: Message, state: FSMContext):
     else:
         await message.answer(text=msg.not_valid_url_msg(), reply_markup=ikb.confirm_correctness())
         await state.set_state(AddDesire.get_desire_url)
+    await message.delete()
 
 
 @router.callback_query(AddDesire.get_desire_confirm, F.data == "confirm_desire")
@@ -53,3 +55,4 @@ async def choice_desire_confirm(callback: CallbackQuery, state: FSMContext):
                         url)
     await callback.message.answer(message)
     await state.clear()
+    await callback.message.delete()
