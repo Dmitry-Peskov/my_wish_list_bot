@@ -2,5 +2,24 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
 def delete_message() -> InlineKeyboardMarkup:
-    mrk = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="🗑 Убрать сообщение", callback_data="delete_message")]])
+    mrk = InlineKeyboardMarkup(
+        inline_keyboard=[[InlineKeyboardButton(text="🗑 Убрать сообщение", callback_data="delete_message")]])
+    return mrk
+
+
+def main_menu() -> InlineKeyboardMarkup:
+    mrk = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="🎁 Загадать желание", callback_data="add_desire")],
+        [InlineKeyboardButton(text="🙅‍♀ Отказаться от мечты", callback_data="delete_desire"),
+         InlineKeyboardButton(text="✍ Скорректировать планы", callback_data="edit_desire")],
+        [InlineKeyboardButton(text="📝 Получить список", callback_data="get_desire")],
+        [InlineKeyboardButton(text="🔙 Скрыть меню", callback_data="delete_message")]
+    ])
+    return mrk
+
+def confirm_correctness() -> InlineKeyboardMarkup:
+    mrk = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="🟢 Корректно", callback_data="confirm_desire")],
+        [InlineKeyboardButton(text="🔴 Давай заново", callback_data="cancel_desire")]
+    ])
     return mrk

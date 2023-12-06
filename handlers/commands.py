@@ -14,12 +14,12 @@ router = Router()
 async def start_cmd(message: Message) -> None:
     this_user_exists = await db.this_user_exists(message.from_user.id)
     if this_user_exists:
-        await message.answer(f"С возвращением, 👤{hbold(message.from_user.full_name)}!")
+        await message.answer(f"С возвращением, 👤{hbold(message.from_user.full_name)}!", reply_markup=ikb.main_menu())
     else:
         await db.add_user(message.from_user.id,
                           message.from_user.full_name,
                           message.from_user.username)
-        await message.answer(f"Добро пожаловать, 👤{hbold(message.from_user.full_name)}!\nВы были зарегистрированы.")
+        await message.answer(f"Добро пожаловать, 👤{hbold(message.from_user.full_name)}!\nВы были зарегистрированы.", reply_markup=ikb.main_menu())
     await message.delete()
 
 
