@@ -27,7 +27,7 @@ async def start_cmd(message: Message) -> None:
 
 @router.message(Command("help"))
 async def help_cmd(message: Message) -> None:
-    await message.answer(text=msg.help_msg(), reply_markup=ikb.delete_message(), parse_mode=ParseMode.HTML)
+    await message.answer(text=msg.help_msg(), reply_markup=ikb.delete_message(), disable_web_page_preview=True, parse_mode=ParseMode.HTML)
     await message.delete()
 
 

@@ -52,7 +52,7 @@ async def choice_desire_url(message: Message, state: FSMContext):
         desire_info = await state.get_data()
         title, url = str(desire_info["title"]), str(desire_info["url"])
         answer = msg.get_confirmed_desire(title, url)
-        await message.answer(text=answer, reply_markup=keyboard)
+        await message.answer(text=answer, reply_markup=keyboard, disable_web_page_preview=True)
     else:
         answer = msg.not_valid_url_msg()
         await message.answer(text=answer, reply_markup=keyboard)
@@ -72,7 +72,7 @@ async def choice_desire_confirm(callback: CallbackQuery, state: FSMContext):
                             url=url,
                             user_id=user_id)
         await DBHelper.add_desire(new_desire)
-        await callback.message.answer(text=answer)
+        await callback.message.answer(text=answer, disable_web_page_preview=True)
         await state.clear()
     else:
         username = callback.from_user.full_name

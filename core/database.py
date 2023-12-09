@@ -1,3 +1,4 @@
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import async_sessionmaker
 from sqlalchemy.ext.asyncio import create_async_engine
 
@@ -51,6 +52,25 @@ class DatabaseHelper:
             async with session.begin():
                 user = await session.get(User, {"telegram_id": telegram_id})
                 return False if user is None else True
+
+    async def get_desires(self, telegram_id: int) -> list[dict[str]]:
+        """
+        Получить список "Желаний" конкретного пользователя по его Telegram ID
+
+        :param telegram_id: ID пользователя в Telegram
+        :return: список содержащий в себе "Желания"
+        """
+        result = list()
+        stmt = select(Desire.title, Desire.url).where(Desire.user_id == telegram_id).order_by(Desire.created_at.desc())
+        async with self.__session() as session:
+            async with session.begin():
+                desires = await session.execute(stmt)
+                for desire in desires.all():
+                    title = desire.title
+                    url = desire.url
+                    d = {"title": title, "url": url}
+                    result.append(d)
+        return result
 
 
 # Инициализируем экземпляр помощника. В дальнейшем он будет импортирован сторонними модулями
