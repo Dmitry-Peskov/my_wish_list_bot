@@ -6,7 +6,8 @@ from states.add_desire import AddDesire
 from sources import messages as msg
 from utils import formated_text
 from keyboards import inline_kb as ikb
-from orm import database as db
+from models.desire import Desire
+from core.database import DBHelper
 
 router = Router()
 
@@ -50,9 +51,10 @@ async def choice_desire_confirm(callback: CallbackQuery, state: FSMContext):
     url = str(desire_info["url"])
     user_id = callback.from_user.id
     message = msg.add_desire_msg_completed(title, url)
-    await db.add_desire(user_id,
-                        title,
-                        url)
+    new_desire = Desire(title=title,
+                        url=url,
+                        user_id=user_id)
+    await DBHelper.add_desire(new_desire)
     await callback.message.answer(message)
     await state.clear()
     await callback.message.delete()
