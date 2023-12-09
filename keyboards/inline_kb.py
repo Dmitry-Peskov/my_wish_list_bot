@@ -20,6 +20,7 @@ def main_menu() -> InlineKeyboardMarkup:
 def confirm_correctness() -> InlineKeyboardMarkup:
     mrk = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="🟢 Корректно", callback_data="confirm_desire")],
-        [InlineKeyboardButton(text="🔴 Давай заново", callback_data="cancel_desire")]
+        [InlineKeyboardButton(text="🔴 Давай заново", callback_data="cancel_add_desire")]
     ])
     return mrk
+
