@@ -25,7 +25,8 @@ class User(BaseModel):
     nickname: Mapped[str | None] = mapped_column(String(100),
                                                  nullable=True)
 
-    desires: Mapped[List["Desire"]] = relationship(back_populates="user")
+    desires: Mapped[List["Desire"]] = relationship(back_populates="user",
+                                                   cascade="all, delete")
 
     def __repr__(self):
         return f"{self.__class__.__name__} (id={self.telegram_id}; fullname={self.fullname}; nickname={self.nickname})"

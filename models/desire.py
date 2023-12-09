@@ -26,7 +26,8 @@ class Desire(BaseModel):
                                        nullable=False)
     url: Mapped[str] = mapped_column(String(2083),
                                      nullable=False)
-    user_id: Mapped[int] = mapped_column(ForeignKey("user.telegram_id"))
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.telegram_id",
+                                                    ondelete="CASCADE"))
     user: Mapped["User"] = relationship(back_populates="desires")
 
     def __repr__(self):
