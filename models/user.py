@@ -7,6 +7,7 @@ from sqlalchemy.types import BigInteger, String, DateTime
 
 if TYPE_CHECKING:
     from .desire import Desire
+    from .db_action_log import ActionLogDB
 
 
 class User(BaseModel):
@@ -27,6 +28,8 @@ class User(BaseModel):
 
     desires: Mapped[List["Desire"]] = relationship(back_populates="user",
                                                    cascade="all, delete")
+    db_log_actions: Mapped[List["ActionLogDB"]] = relationship(back_populates="user",
+                                                               cascade="all, delete")
 
     def __repr__(self):
         return f"{self.__class__.__name__} (id={self.telegram_id}; fullname={self.fullname}; nickname={self.nickname})"
