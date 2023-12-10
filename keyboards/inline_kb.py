@@ -10,8 +10,7 @@ def delete_message() -> InlineKeyboardMarkup:
 def main_menu() -> InlineKeyboardMarkup:
     mrk = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="🎁 Загадать желание", callback_data="add_desire")],
-        [InlineKeyboardButton(text="🙅‍♀ Отказаться от мечты", callback_data="delete_desire"),
-         InlineKeyboardButton(text="✍ Скорректировать планы", callback_data="edit_desire")],
+        [InlineKeyboardButton(text="🙅‍♀ Отказаться от мечты", callback_data="delete_desire")],
         [InlineKeyboardButton(text="📝 Получить список", callback_data="get_desire")],
         [InlineKeyboardButton(text="🔙 Скрыть меню", callback_data="delete_message")]
     ])
@@ -32,4 +31,12 @@ def desire_delete_buttons(desires: list[dict[str]]) -> InlineKeyboardMarkup:
         btn = [InlineKeyboardButton(text=desire["title"], callback_data=str(desire["id"]))]
         buttons.append(btn)
     mrk = InlineKeyboardMarkup(inline_keyboard=buttons)
+    return mrk
+
+
+def desire_delete_confirmed_buttons() -> InlineKeyboardMarkup:
+    mrk = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="🗑 Удалить", callback_data="confirmed_delete")],
+        [InlineKeyboardButton(text="🔙 Назад", callback_data="abort_delete")]
+    ])
     return mrk

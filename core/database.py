@@ -61,7 +61,8 @@ class DatabaseHelper:
         :return: список содержащий в себе "Желания"
         """
         result = list()
-        stmt = select(Desire.title, Desire.url, Desire.id).where(Desire.user_id == telegram_id).order_by(Desire.created_at.desc())
+        stmt = select(Desire.title, Desire.url, Desire.id).where(Desire.user_id == telegram_id).order_by(
+            Desire.created_at.desc())
         async with self.__session() as session:
             async with session.begin():
                 desires = await session.execute(stmt)
@@ -72,6 +73,16 @@ class DatabaseHelper:
                     d = {"title": title, "url": url, "id": d_id}
                     result.append(d)
         return result
+
+    async def delete_desire(self, desire_id: int) -> str:
+        name_desire = str()
+        async with self.__session() as session:
+            async with session.begin():
+                desire = await session.get(Desire, {"id": desire_id})
+                name_desire += str(desire.title)
+                await session.delete(desire)
+                await session.commit()
+        return name_desire
 
 
 # Инициализируем экземпляр помощника. В дальнейшем он будет импортирован сторонними модулями
