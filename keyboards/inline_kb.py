@@ -17,6 +17,7 @@ def main_menu() -> InlineKeyboardMarkup:
     ])
     return mrk
 
+
 def confirm_correctness() -> InlineKeyboardMarkup:
     mrk = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="🟢 Корректно", callback_data="confirm_desire")],
@@ -24,3 +25,11 @@ def confirm_correctness() -> InlineKeyboardMarkup:
     ])
     return mrk
 
+
+def desire_delete_buttons(desires: list[dict[str]]) -> InlineKeyboardMarkup:
+    buttons = list()
+    for desire in desires:
+        btn = [InlineKeyboardButton(text=desire["title"], callback_data=str(desire["id"]))]
+        buttons.append(btn)
+    mrk = InlineKeyboardMarkup(inline_keyboard=buttons)
+    return mrk

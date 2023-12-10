@@ -8,6 +8,7 @@ from handlers import commands
 from handlers import service_callback
 from handlers import add_desire
 from handlers import get_desire
+from handlers import delete_desire
 from config import API_BOT
 
 # инициализируем диспетчера
@@ -17,6 +18,7 @@ dp.include_router(commands.router)
 dp.include_router(service_callback.router)
 dp.include_router(add_desire.router)
 dp.include_router(get_desire.router)
+dp.include_router(delete_desire.router)
 
 async def main() -> None:
     bot = Bot(API_BOT.TOKEN, parse_mode=ParseMode.HTML)

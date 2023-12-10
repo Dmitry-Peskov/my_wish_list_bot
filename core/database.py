@@ -61,14 +61,15 @@ class DatabaseHelper:
         :return: список содержащий в себе "Желания"
         """
         result = list()
-        stmt = select(Desire.title, Desire.url).where(Desire.user_id == telegram_id).order_by(Desire.created_at.desc())
+        stmt = select(Desire.title, Desire.url, Desire.id).where(Desire.user_id == telegram_id).order_by(Desire.created_at.desc())
         async with self.__session() as session:
             async with session.begin():
                 desires = await session.execute(stmt)
                 for desire in desires.all():
                     title = desire.title
                     url = desire.url
-                    d = {"title": title, "url": url}
+                    d_id = desire.id
+                    d = {"title": title, "url": url, "id": d_id}
                     result.append(d)
         return result
 
