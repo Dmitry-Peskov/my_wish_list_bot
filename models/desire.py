@@ -31,4 +31,4 @@ class Desire(BaseModel):
     user: Mapped["User"] = relationship(back_populates="desires")
 
     def __repr__(self):
-        return f"{self.__class__.__name__} (id={self.id}; title={self.title}; user={self.user_id})"
+        return f"{self.__class__.__name__} (id={self.id}; user={self.user_id}; title={self.title}; url={self.url})"

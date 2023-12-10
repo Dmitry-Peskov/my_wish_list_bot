@@ -36,8 +36,9 @@ async def delete_desire_confirmed(callback: CallbackQuery, state: FSMContext) ->
 async def confirmed_delete(callback: CallbackQuery, state: FSMContext) -> None:
     if callback.data == "confirmed_delete":
         state_data = await state.get_data()
+        user_id = callback.from_user.id
         desire_id = int(state_data["desire_id"])
-        delete_desire_name = await DBHelper.delete_desire(desire_id=desire_id)
+        delete_desire_name = await DBHelper.delete_desire(user_id=user_id, desire_id=desire_id)
         answer = msg.delete_desire(delete_desire_name)
         await callback.message.edit_text(text=answer)
     else:

@@ -56,8 +56,6 @@ class DatabaseHelper:
         async with self.__session() as session:
             async with session.begin():
                 user = await session.get(User, {"telegram_id": telegram_id})
-                log = ActionLogDB(user_id=telegram_id, message="Авторизация в системе", details=None)
-                session.add(log)
                 return False if user is None else True
 
     async def get_desires(self, telegram_id: int) -> list[dict[str]]:
@@ -79,15 +77,17 @@ class DatabaseHelper:
                     d_id = desire.id
                     d = {"title": title, "url": url, "id": d_id}
                     result.append(d)
-                log = ActionLogDB(user_id=telegram_id, message="Запрошен список желаний", details=result)
+                log = ActionLogDB(user_id=telegram_id, message="Запрошен список желаний", details=str(result))
                 session.add(log)
         return result
 
-    async def delete_desire(self, desire_id: int) -> str:
+    async def delete_desire(self, user_id: int, desire_id: int) -> str:
         name_desire = str()
         async with self.__session() as session:
             async with session.begin():
                 desire = await session.get(Desire, {"id": desire_id})
+                log = ActionLogDB(user_id=user_id, message="Удаление желания", details=str(desire))
+                session.add(log)
                 name_desire += str(desire.title)
                 await session.delete(desire)
                 await session.commit()
