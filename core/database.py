@@ -12,7 +12,7 @@ class DatabaseHelper:
 
     def __init__(self):
         self.__engine = create_async_engine(url=DB.DSN,
-                                            echo=True,
+                                            echo=False,
                                             pool_size=10,
                                             max_overflow=5,
                                             )
