@@ -5,6 +5,7 @@ from sqlalchemy.ext.asyncio import create_async_engine
 from config import DB
 from models.desire import Desire
 from models.user import User
+from models.db_action_log import ActionLogDB
 
 
 class DatabaseHelper:
@@ -28,7 +29,9 @@ class DatabaseHelper:
         """
         async with self.__session() as session:
             async with session.begin():
+                log = ActionLogDB(user_id=user.telegram_id, message="Регистрация нового пользователя", details=str(user))
                 session.add(user)
+                session.add(log)
 
     async def add_desire(self, desire: Desire) -> None:
         """
@@ -39,7 +42,9 @@ class DatabaseHelper:
         """
         async with self.__session() as session:
             async with session.begin():
+                log = ActionLogDB(user_id=desire.user_id, message="Добавлено новое желание", details=str(desire))
                 session.add(desire)
+                session.add(log)
 
     async def this_user_exists(self, telegram_id: int) -> bool:
         """
@@ -51,6 +56,8 @@ class DatabaseHelper:
         async with self.__session() as session:
             async with session.begin():
                 user = await session.get(User, {"telegram_id": telegram_id})
+                log = ActionLogDB(user_id=telegram_id, message="Авторизация в системе", details=None)
+                session.add(log)
                 return False if user is None else True
 
     async def get_desires(self, telegram_id: int) -> list[dict[str]]:
@@ -72,6 +79,8 @@ class DatabaseHelper:
                     d_id = desire.id
                     d = {"title": title, "url": url, "id": d_id}
                     result.append(d)
+                log = ActionLogDB(user_id=telegram_id, message="Запрошен список желаний", details=result)
+                session.add(log)
         return result
 
     async def delete_desire(self, desire_id: int) -> str:

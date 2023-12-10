@@ -10,6 +10,7 @@ if TYPE_CHECKING:
 
 
 class ActionLogDB(BaseModel):
+
     __tablename__ = "db_action_log"
 
     id: Mapped[int] = mapped_column(BigInteger,
@@ -30,7 +31,7 @@ class ActionLogDB(BaseModel):
     details: Mapped[str | None] = mapped_column(String,
                                                 nullable=True)
 
-    user: Mapped["User"] = relationship(back_populates="db_action_log")
+    user: Mapped["User"] = relationship(back_populates="db_log_actions")
 
     def __repr__(self):
         return f"| {self.created_at} ; {self.user_id} ; {self.message} ; {self.details} |"
