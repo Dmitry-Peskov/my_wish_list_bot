@@ -29,10 +29,3 @@ class API_BOT:
 class DB:
     DSN: str = create_dsn()
 
-
-@dataclass
-class ADMIN:
-    ID_str: str = str(os.getenv("WITH_LIST_BOT_ADMIN_ID"))
-    ID_int: int = int(os.getenv("WITH_LIST_BOT_ADMIN_ID"))
-    NICKNAME: str = "@" + os.getenv("WITH_LIST_BOT_ADMIN_NICKNAME")
-    VK_URL: str = "vk.com/" + os.getenv("WITH_LIST_BOT_ADMIN_VK_NAME")

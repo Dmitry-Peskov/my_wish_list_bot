@@ -1,4 +1,3 @@
-from config import ADMIN
 
 
 def back_to_main_menu_msg(username: str) -> str:
@@ -12,8 +11,8 @@ def about_msg() -> str:
           'Исходный код проекта находится в открытом доступе и доступен в репозитории GitHub ' \
           '🔗<a href="https://github.com/Dmitry-Peskov/my_wish_list_bot/">my_wish_list_bot</a>\n\n' \
           'Если у Вас возникли предложения или вы обнаружили ошибки в работе бота, пожалуйста, свяжитесь со мной:\n' \
-          f'📱 <a href="tg://user?id={ADMIN.ID_str}">{ADMIN.NICKNAME}</a>\n' \
-          f'💻 <a href="{ADMIN.VK_URL}">ВКонтакте</a>\n\n'
+          '📱 <a href="tg://user?id=1183058393">PeskovDV</a>\n' \
+          '💻 <a href="vk.com/dmitry_peskov">ВКонтакте</a>\n\n'
     return msg
 
 
